@@ -1,6 +1,19 @@
 //import { Component, Input, input, computed, Output, EventEmitter, output } from '@angular/core';
 import { Component, Input,  Output, EventEmitter, output } from '@angular/core';
 
+//create custom type User to define the structure of a user object
+/*type User = {
+    id: string;
+    avatar: string;
+    name: string;
+}*/
+
+interface User{
+    id: string;
+    avatar: string;
+    name: string;
+}
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -10,20 +23,16 @@ import { Component, Input,  Output, EventEmitter, output } from '@angular/core';
 })
 export class UserComponent {
 
-  @Input({required: true}) id!: string;
-  //we set the property avatar as settable from outside
-  @Input({required: true}) avatar!: string; //using ! to indicate that this property will be set later
-  @Input({required: true}) name!: string; 
+  @Input({required: true}) user!: User;
+
   @Output() select = new EventEmitter<string>();//now the event knows that it will emit a string value when the user is selected
 
-  //select = output<string>();//ορίζεται αυτόματα ως EventEmitter<string> για να εκπέμπει τιμές τύπου string όταν ο χρήστης επιλέγεται
-
   get imagePath(){
-    return 'assets/users/' + this.avatar;
+    return 'assets/users/' + this.user.avatar;
   }
 
   onSelectedUser() {
-      this.select.emit(this.id); //emit a value when the user is selected
+      this.select.emit(this.user.id); //emit a value when the user is selected
   }
 }
 
