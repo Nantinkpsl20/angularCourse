@@ -1,19 +1,6 @@
 //import { Component, Input, input, computed, Output, EventEmitter, output } from '@angular/core';
 import { Component, Input,  Output, EventEmitter, output } from '@angular/core';
-
-//create custom type User to define the structure of a user object
-/*type User = {
-    id: string;
-    avatar: string;
-    name: string;
-}*/
-
-interface User{
-    id: string;
-    avatar: string;
-    name: string;
-}
-
+import {type User} from './user.model'; //import the User interface
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -24,6 +11,7 @@ interface User{
 export class UserComponent {
 
   @Input({required: true}) user!: User;
+  @Input({required: true}) selected!: boolean;
 
   @Output() select = new EventEmitter<string>();//now the event knows that it will emit a string value when the user is selected
 
