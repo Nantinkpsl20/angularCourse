@@ -48,7 +48,7 @@ export class TasksComponent {
     this.tasks = this.tasks.filter((task)=> task.id !== taskId); //it returns false if the task is not the user's one
   }
 
-   onAddTask(){
+   onStartAddTask(){
      //this.complete.emit(this.userId);
      const task: Task = {
           id: 'u4',
