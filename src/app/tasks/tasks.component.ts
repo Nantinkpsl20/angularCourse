@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
+import { Task } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -11,6 +12,7 @@ import { TaskComponent } from './task/task.component';
 export class TasksComponent {
   @Input({ required: true }) userId?: string;
   @Input({ required: true }) userName?: string;
+  
 
   tasks = [
     {
@@ -43,7 +45,19 @@ export class TasksComponent {
   }
 
   onCompleteTask(taskId: string) {
+    this.tasks = this.tasks.filter((task)=> task.id !== taskId); //it returns false if the task is not the user's one
+  }
 
+   onAddTask(){
+     //this.complete.emit(this.userId);
+     const task: Task = {
+          id: 'u4',
+          userId: this.userId!,
+          title: 'new Task',
+          summary: 'New task for you, added successfully',
+          dueDate: '2025-12-31',
+        };
 
+      this.tasks.push(task);
   }
 }

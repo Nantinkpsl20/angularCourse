@@ -2,18 +2,18 @@
   <header>
     <h2>{{ userName }}'s Tasks</h2>
     <menu>
-      <button>Add Task</button>
+      <button (click)="userId ? onAddTask() : null">Add Task</button>
     </menu>
   </header>
 
   <!-- the list that contains the tasks -->
   <ul>
-  <!--φέρνει πίσω μονο τα tasks του επιλεγμένου χρήστη-->
-  <!--το task στο loop είναι ένα αντικείμενο τύπου Task-->
+    <!--φέρνει πίσω μονο τα tasks του επιλεγμένου χρήστη-->
+    <!--το task στο loop είναι ένα αντικείμενο τύπου Task-->
     @for(task of selectedUserTasks; track task.id){
-      <li>
-        <app-task  [task]="task" (complete) ="onCompleteTask($event)"/>
-      </li>
+    <li>
+      <app-task [task]="task" (complete)="onCompleteTask($event)" />
+    </li>
     }
   </ul>
 </section>
