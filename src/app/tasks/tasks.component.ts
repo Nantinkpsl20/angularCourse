@@ -66,4 +66,9 @@ export class TasksComponent {
       onStartAddTask(){
         this.isAddingTask = true;
       }
+
+      onCancelAddTask(){
+        //it doesn't show the app-new-task cause @if(isAddingTask)
+        this.isAddingTask = false;
+      }
 }
