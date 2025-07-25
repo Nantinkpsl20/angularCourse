@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { NewTaskComponent } from './new-task/new-task.component';
-import { Task } from './task/task.model';
+import { type NewTaskData, Task } from './task/task.model';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -10,65 +11,31 @@ import { Task } from './task/task.model';
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
 })
+
 export class TasksComponent {
-  @Input({ required: true }) userId?: string;
-  @Input({ required: true }) userName?: string;
-  
+  @Input({ required: true }) userId!: string;
+  @Input({ required: true }) userName!: string;
   isAddingTask = false;
 
-  tasks = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Master Angular',
-      summary:
-        'Learn all the basics and advanced features of Angular & how to apply them.',
-      dueDate: '2025-12-31',
-    },
-    {
-      id: 't2',
-      userId: 'u3',
-      title: 'Build first prototype',
-      summary: 'Build a first prototype of the online shop website',
-      dueDate: '2024-05-31',
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Prepare issue template',
-      summary:
-        'Prepare and describe an issue template which will help with project management',
-      dueDate: '2024-06-15',
-    },
-  ];
+  constructor( private tasksService: TasksService){}
 
   get selectedUserTasks() {
-    return this.tasks.filter((task) => task.userId === this.userId);
+    //we get the user tasks
+    return this.tasksService.getUserTasks(this.userId);
   }
 
-  onCompleteTask(taskId: string) {
-    this.tasks = this.tasks.filter((task)=> task.id !== taskId); //it returns false if the task is not the user's one
+  onCompleteTask(taskId: string) {}
+
+  onStartAddTask() {
+    this.isAddingTask = true;
   }
 
-  /* onStartAddTask(){
-     this.complete.emit(this.userId);
-     const task: Task = {
-          id: 'u4',
-          userId: this.userId!,
-          title: 'new Task',
-          summary: 'New task for you, added successfully',
-          dueDate: '2025-12-31',
-        };
+  onCancelAddTask() {
+    //it doesn't show the app-new-task cause @if(isAddingTask)
+    this.isAddingTask = false;
+  }
 
-      this.tasks.push(task);
-  }*/
-
-      onStartAddTask(){
-        this.isAddingTask = true;
-      }
-
-      onCancelAddTask(){
-        //it doesn't show the app-new-task cause @if(isAddingTask)
-        this.isAddingTask = false;
-      }
+  onAddTask(taskData: NewTaskData) {
+    this.isAddingTask = false;
+  }
 }
