@@ -30,6 +30,16 @@ private tasks = [
     },
   ];
 
+  constructor(){
+    const tasks = localStorage.getItem('tasks');
+    
+    //if we found tasks then json format
+    if(tasks){
+      this.tasks = JSON.parse(tasks);
+    }
+    
+  }
+
   getUserTasks(userId: string){
     return this.tasks.filter((task) => task.userId === userId);
   }
@@ -43,9 +53,16 @@ private tasks = [
           dueDate: taskData.date
          });
 
+      this.saveTasks();     
   }
 
   removeTask(id: string){
      this.tasks = this.tasks.filter((task)=> task.id !== id); //it returns false if the task is not the user's one
+     this.saveTasks();
+    }
+
+  //it is only used in this method and save the changes on tasks
+  private saveTasks(){
+     localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 }

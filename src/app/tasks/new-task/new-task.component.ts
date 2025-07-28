@@ -28,4 +28,5 @@ export class NewTaskComponent {
          date: this.enteredDate
        })
    }
+
 }
